@@ -16,15 +16,19 @@ function squareStateFromTurn(t: Turn): SquareState {
 }
 
 interface SquareProps {
-    currentTurn: Turn
+    currentTurn: Turn,
+    swapTurn: () => void
 }
 
 export function Square(props: SquareProps) {
     let [state, setState] = useState(SquareState.None);
 
-    
     return (
-        <div className="square" onClick={() => setState(squareStateFromTurn(props.currentTurn))}>
+        // <div className="square" onClick={() => setState(squareStateFromTurn(props.currentTurn))}>
+        <div className="square" onClick={() => {
+            setState(squareStateFromTurn(props.currentTurn));
+            props.swapTurn();
+        }}>
             {state}
         </div>
     );

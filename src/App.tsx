@@ -6,6 +6,14 @@ import { Square } from "./Square";
 export function App() {
     let [turn, setTurn] = useState(Turn.X);
 
+    let swapTurn = () => {
+        if (turn == Turn.X) {
+            setTurn(Turn.O);
+        } else {
+            setTurn(Turn.X);
+        }
+    };
+
     return (
         <div className="app">
             <h1>Tic Tac Toe</h1>
@@ -14,25 +22,13 @@ export function App() {
             </p>
             <div className="grid-outer">
                 <div className="grid">
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
-                    <Square currentTurn={turn}></Square>
+                    {
+                        [...Array(9)].map(() => <Square currentTurn={turn} swapTurn={swapTurn} />)
+                    }
                 </div>
             </div>
             <p>
-                <button onClick={() => {
-                    if (turn == Turn.X) {
-                        setTurn(Turn.O);
-                    } else {
-                        setTurn(Turn.X);
-                    }
-                }}>
+                <button onClick={swapTurn}>
                     Swap Turn
                 </button>
             </p>
