@@ -27,11 +27,6 @@ export function App() {
                     }
                 </div>
             </div>
-            <p>
-                <button onClick={swapTurn}>
-                    Swap Turn
-                </button>
-            </p>
         </div>
     );
 }

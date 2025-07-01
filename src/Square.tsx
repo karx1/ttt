@@ -26,8 +26,10 @@ export function Square(props: SquareProps) {
     return (
         // <div className="square" onClick={() => setState(squareStateFromTurn(props.currentTurn))}>
         <div className="square" onClick={() => {
-            setState(squareStateFromTurn(props.currentTurn));
-            props.swapTurn();
+            if (state == SquareState.None) {
+                setState(squareStateFromTurn(props.currentTurn));
+                props.swapTurn();
+            }
         }}>
             {state}
         </div>
