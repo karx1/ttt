@@ -1,4 +1,6 @@
-# bun-react-template
+# ttt
+
+TicTacToe game made with Bun + React as a way for me to learn these technologies.
 
 To install dependencies:
 
@@ -17,5 +19,3 @@ To run for production:
 ```bash
 bun start
 ```
-
-This project was created using `bun init` in bun v1.2.17. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
