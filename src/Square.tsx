@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Ref, useImperativeHandle, useState } from "react";
 import { Turn } from "./Turn";
 
 export enum SquareState {
@@ -18,10 +18,23 @@ function squareStateFromTurn(t: Turn): SquareState {
 interface SquareProps {
     currentTurn: Turn;
     swapTurn: () => void;
+    ref: Ref<SquareRef>;
 }
 
-export function Square({ currentTurn, swapTurn }: SquareProps) {
+export interface SquareRef {
+    clear: () => void;
+}
+
+export function Square({ currentTurn, swapTurn, ref }: SquareProps) {
     let [state, setState] = useState(SquareState.None);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            clear: () => setState(SquareState.None),
+        }),
+        [state]
+    );
 
     return (
         <div

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./index.css";
 import Turn from "./Turn";
-import { Square } from "./Square";
+import { Square, SquareRef } from "./Square";
 
 export function App() {
     let [turn, setTurn] = useState(Turn.X);
@@ -14,19 +14,36 @@ export function App() {
         }
     };
 
+    let refs = [...Array(9)].map(() => useRef<SquareRef>(null));
+
     return (
         <div className="app">
             <h1>Tic Tac Toe</h1>
-            <p>
-                Current Turn: {turn}
-            </p>
+            <p>Current Turn: {turn}</p>
             <div className="grid-outer">
                 <div className="grid">
-                    {
-                        [...Array(9)].map(() => <Square currentTurn={turn} swapTurn={swapTurn} />)
-                    }
+                    {[...Array(9)].map((_e, i) => (
+                        <Square
+                            key={i}
+                            currentTurn={turn}
+                            swapTurn={swapTurn}
+                            ref={refs[i]}
+                        />
+                    ))}
                 </div>
             </div>
+            <p>
+                <button
+                    onClick={() => {
+                        for (let i = 0; i < refs.length; i++) {
+                            let ref = refs[i];
+                            ref.current?.clear();
+                        }
+                    }}
+                >
+                    Clear squares
+                </button>
+            </p>
         </div>
     );
 }
