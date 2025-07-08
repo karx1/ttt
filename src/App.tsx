@@ -16,6 +16,11 @@ export function App() {
 
     let refs = [...Array(9)].map(() => useRef<SquareRef>(null));
 
+    let checkRows = () => {
+        let states = refs.map((ref, _i) => ref.current?.getState());
+        console.log(states);
+    };
+
     return (
         <div className="app">
             <h1>Tic Tac Toe</h1>
@@ -27,6 +32,7 @@ export function App() {
                             key={i}
                             currentTurn={turn}
                             swapTurn={swapTurn}
+                            checkRows={checkRows}
                             ref={refs[i]}
                         />
                     ))}
@@ -35,8 +41,7 @@ export function App() {
             <p>
                 <button
                     onClick={() => {
-                        for (let i = 0; i < refs.length; i++) {
-                            let ref = refs[i];
+                        for (let ref of refs) {
                             ref.current?.clear();
                         }
                     }}
