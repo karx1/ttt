@@ -51,6 +51,9 @@ export function Square({
     return (
         <div
             className="square"
+            style={{
+                cursor: !done ? "pointer" : "default",
+            }}
             onClick={() => {
                 if (!done && state == SquareState.None) {
                     setState(squareStateFromTurn(currentTurn));
