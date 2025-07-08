@@ -3,8 +3,10 @@ import "./index.css";
 import { Turn, Winner } from "./Turn";
 import { Square, SquareRef, SquareState } from "./Square";
 
+const DEFAULT_TURN = Turn.X;
+
 export function App() {
-    let [turn, setTurn] = useState(Turn.X);
+    let [turn, setTurn] = useState(DEFAULT_TURN);
     let [done, setDone] = useState(false);
     let [winner, setWinner] = useState(Winner.None);
 
@@ -99,17 +101,32 @@ export function App() {
     return (
         <div className="app">
             <h1>Tic Tac Toe</h1>
-            <p>Current Turn: {turn}</p>
             {/* bruh this frying me ts ugly asl 😭*/}
             {/* TODO: fix this later */}
             {winner != Winner.None ? (
-                winner == Winner.Draw ? (
-                    <h2>This game is a draw!</h2>
-                ) : (
-                    <h2>The winner is {winner}!</h2>
-                )
+                <>
+                    {winner == Winner.Draw ? (
+                        <h2>This game is a draw!</h2>
+                    ) : (
+                        <h2>The winner is {winner}!</h2>
+                    )}
+                    <p>
+                        <button
+                            onClick={() => {
+                                for (let ref of refs) {
+                                    ref.current?.clear();
+                                }
+                                setDone(false);
+                                setWinner(Winner.None);
+                                setTurn(DEFAULT_TURN);
+                            }}
+                        >
+                            New Game
+                        </button>
+                    </p>
+                </>
             ) : (
-                <></>
+                <h2>Current Turn: {turn}</h2>
             )}
             <div className="grid-outer">
                 <div className="grid">
@@ -125,18 +142,6 @@ export function App() {
                     ))}
                 </div>
             </div>
-            <p>
-                <button
-                    onClick={() => {
-                        for (let ref of refs) {
-                            ref.current?.clear();
-                        }
-                        setDone(false);
-                    }}
-                >
-                    Clear squares
-                </button>
-            </p>
         </div>
     );
 }
