@@ -17,6 +17,7 @@ function squareStateFromTurn(t: Turn): SquareState {
 
 interface SquareProps {
     currentTurn: Turn;
+    done: boolean;
     swapTurn: () => void;
     checkRows: () => void;
     ref: Ref<SquareRef>;
@@ -27,7 +28,13 @@ export interface SquareRef {
     getState: () => SquareState;
 }
 
-export function Square({ currentTurn, swapTurn, checkRows, ref }: SquareProps) {
+export function Square({
+    currentTurn,
+    done,
+    swapTurn,
+    checkRows,
+    ref,
+}: SquareProps) {
     let [state, setState] = useState(SquareState.None);
 
     useImperativeHandle(
@@ -45,7 +52,7 @@ export function Square({ currentTurn, swapTurn, checkRows, ref }: SquareProps) {
         <div
             className="square"
             onClick={() => {
-                if (state == SquareState.None) {
+                if (!done && state == SquareState.None) {
                     setState(squareStateFromTurn(currentTurn));
                     swapTurn();
                 }

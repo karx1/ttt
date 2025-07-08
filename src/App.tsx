@@ -5,6 +5,7 @@ import { Square, SquareRef } from "./Square";
 
 export function App() {
     let [turn, setTurn] = useState(Turn.X);
+    let [done, setDone] = useState(false);
 
     let swapTurn = () => {
         if (turn == Turn.X) {
@@ -31,6 +32,7 @@ export function App() {
                         <Square
                             key={i}
                             currentTurn={turn}
+                            done={done}
                             swapTurn={swapTurn}
                             checkRows={checkRows}
                             ref={refs[i]}
@@ -44,6 +46,7 @@ export function App() {
                         for (let ref of refs) {
                             ref.current?.clear();
                         }
+                        setDone(false);
                     }}
                 >
                     Clear squares
